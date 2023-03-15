@@ -1,1 +1,73 @@
 
+#include <stdio.h>
+
+
+int main()
+{
+
+
+    float fh, cl;
+    char ch, option;
+
+
+
+
+
+    printf("\n\n Drücken Sie c, um die Temperatur von Fahrenheit in Celsius umzuwandeln.");
+    printf("\n\n Drücken Sie f, um die Temperatur von Celsius in Fahrenheit umzuwandeln.");
+    printf("\n\n Geben Sie Ihre Wahl ein (c,f):");
+    scanf_s("%c", &ch);                                
+
+    if ((ch == 'c') || (ch == 'C'))                    
+    {
+        printf("\n\nTemperatur in Fahrenheit eingeben: ");
+        scanf_s("%f", &fh);
+        cl = (fh - 32) / 1.8;
+        printf("\n\nTemperatur in Celsius: %.2f\n\n", cl);
+    }
+    else if ((ch == 'f') || (ch == 'F'))
+    {
+        printf("\n\nTemperatur in Celsius eingeben: ");
+        scanf_s("%f", &cl);
+        fh = (cl * 1.8) + 32;
+        printf("\n\nTemperatur in Fahrenheit: %.2f\n\n", fh);
+    }
+    else
+    {
+
+        printf("\n\n Ungültige Wahl!!!\n\n");
+        
+
+    }
+
+
+
+again:
+    printf("\n\nmöchten sie Vorgang wiederholen? (J/N):");
+    scanf_s(" %c", &option);
+
+
+    if ((option == 'j') || (option == 'J'))
+    {
+
+        
+        getchar();
+         main();
+         
+    }
+    else if ((option == 'n') || (option == 'N'))
+    {
+        return 0;
+    }
+    else
+    {
+
+        printf("\nbitte sagen Sie ja(j/J) oder nein(n/N)\n");
+        goto again;
+    }
+
+
+
+
+
+}
