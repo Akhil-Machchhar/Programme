@@ -1,0 +1,206 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+void progzweck()
+{
+	printf("\n=====================================================================================================================================================================================");
+	printf("\n<------------------------------DIESES PROGRAMM ERGIBT HEXADEZIMALZAHLEN & TABELLARISCHE ASCII-ZEICHENAUSGABE DES EINGEGEBENEN FESTEN-INTERVALLS----------------------------------->\n");
+    printf("\n=====================================================================================================================================================================================");
+}
+
+
+int lowerlimit()
+{
+	
+	int ll = -1;
+	printf("\n{[---UNTERGRENZE---]} : ");
+	
+	while(ll<0||ll>255)
+		{
+		scanf("%d",&ll);
+		if((ll<0)||(ll>255))
+			{
+				
+		printf(" \n---!-!-!-!-!-!-!DER AUSGEWAEHLTE WERT LIEGT AUSSERHALB DES GUELTIGEN WERTBEREICHS!-!-!-!-!-!-!---\n  ");
+		printf("\n{[---UNTERGRENZE---]} : ");
+		getchar();
+			}
+            
+	    }
+    printf("\n ||---EINGEGEBENEN WERT IST ZULAESSIG---|| ");
+
+	return ll;/*return goes to main()*/
+}
+
+
+
+int upperlimit(int ll)
+{
+	
+	int ul = -1;
+	printf("\n{[---OBERGRENZE---]} : ");
+	
+	while(ul>256||ul<ll)
+		{
+		scanf("%d",&ul);
+		if(ul>256||ul<ll)
+			{
+		printf("\n ---!-!-!-!-!-!-!DER AUSGEWAEHLTE WERT LIEGT AUSSERHALB DES GUELTIGEN WERTBEREICHS!-!-!-!-!-!-!--- \n ");
+	    printf("\n{[---OBERGRENZE---]} : ");
+		getchar();
+		    }
+	    }
+    printf("\n ||---EINGEGEBENEN WERT IST ZULAESSIG---|| ");
+
+	return ul; /*return goes to main()*/
+}
+
+
+int decimal(int zahl)      /*decimal HAS the value of zahl*/
+{
+	
+	printf("\t\t\t%d\t\t\t", zahl);
+}
+
+
+int dec2hex(int zahl)
+{
+	
+	int rem, i=0;
+    char hexnum[50];
+    while(zahl!=0)      /*zahl=65!=0*//*loop runs untill zahl=0*/
+    {
+            rem = zahl%16;   /*reminder 1*/
+            if(rem<10)         /*we have 1-9 as normal numbers*/
+            rem = rem+48;  /* 48 is ascii value of 0 */
+            else
+            rem = rem+55;  /* 10+55=65 is ascii value of A */
+            hexnum[i] = rem;   /*in hexnum[i] all the remainders are being stored in form of array */
+            i++;     /*ti increase index if hexnum[] for next while loop*/
+            zahl = zahl/16;  
+    }
+
+    for(i=i-1; i>=0; i--)
+        printf("%c", hexnum[i]);
+}
+
+
+	
+void dec2ascii(int zahl)
+{
+
+	printf("\t\t\t%c ", zahl);
+}
+
+
+void printheader()
+{
+	printf("\t\t_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_\n");
+	printf("\n\t\t|  DEZIMAL\t |\t  HEXADEZIMAL\t  |\t  ASCII-ZEICHEN   |");
+	printf("\n\t\t_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_\n");
+}
+
+void show(int zahl)
+{
+	
+	if (zahl!=27)
+	{
+	decimal(zahl);
+    dec2hex(zahl);
+	dec2ascii(zahl);
+	printf("\n");
+	printf(" ");
+	}
+	else
+	{
+	decimal(zahl);
+    dec2hex(zahl);
+	printf("\t\t\tESC ", zahl);
+	printf("\n");
+	printf(" ");
+	}
+	
+	
+}
+
+
+void printTable(int ll,int ul)
+{
+	int z;
+	
+	int zahl=0;
+	
+	
+	getchar();
+	system("cls");
+	printheader();
+	for(z=ll; z<=ul; z++)
+	{
+		
+		show(z);
+		printf("\n");
+		if(zahl%20==0&&zahl!=ul&&zahl!=0)
+		{
+		printf("\n \t\t°°°°°°°°ZUR NAECHSTEN SEITE,DRUECKEN SIE EINE BELIEBIGE TASTE°°°°°°°°° \n");
+		getch();
+		system("cls");
+		printheader();
+		
+		}
+		zahl++;
+	}
+}
+
+void wiederholung()
+{
+	char option;
+	printf("\n \t\t°°°°°°°°FUER WIEDERHOLUNGSMOEGLICHKEIT,DRUECKEN SIE EINE BELIEBIGE TASTE°°°°°°°°° \n");
+	getch();
+	system("cls");
+	do
+	{
+		printf("\n Möchten Sie den Vorgang wiederholen?(J/N) : ");
+		option = getche();
+
+		if ((option == 'j') || (option == 'J'))
+		{
+			main();
+
+		}
+		else if ((option == 'n') || (option == 'N'))
+		{
+		printf("\n");
+			exit(0);
+
+		}
+		else
+		{
+			printf("\n Bitte geben Sie als Eingabe entweder (j/J) oder (n/N) \n");
+		}
+
+	} while (option);
+
+}
+
+
+
+
+
+
+int main(void)
+{
+	
+	int ll,ul;
+	
+	progzweck();
+	ll = lowerlimit();
+	getchar();
+	ul = upperlimit(ll);
+	printf("\n\n\t\t######### DRUECKEN SIE EINE BELIEBIGE TASTE ZUR ERGEBNISAUSGABE######### \n");
+	getche();
+	printTable(ll,ul);
+	wiederholung();
+	printf("\n");
+	return 0;
+}
