@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+
+void main()
+{
+ printf("\n <-------------------------Diese Programm untersucht einer Festen Zeichenkette.----------------------> \n");
+  
+  
+   char s[61];
+   char s1,s2,s3,option;
+   int j;
+
+   
+   
+   printf("\n Bitte geben Sie hier 3-Prüfzeichen ein : \n ");
+    printf("\n Prüfzeichen-1 :  ");
+    s1 =getche();
+    
+    printf("\n Prüfzeichen-2 :  ");
+    s2 =getche();
+    
+    printf("\n Prüfzeichen-3 :  ");
+    s3 =getche();
+    
+   
+    printf("\n Bitte geben Sie hier Die Zeichenfolge : ");
+ for(j=0;j<60;j++)
+ { 
+  s[j]=getche();
+  if(s[j]==13)  /*13 ist ascii Betrag von Enter-Taste */
+  break;
+ }
+ s[j]='\0';
+ 
+ int i,ls1=0,ls2=0,ls3=0,lr=0,lspace=0;
+for(i=0;s[i];i++)
+{
+if (s[i]== s1)
+ls1++; 
+else if (s[i]== s2)
+ls2++; 
+else if (s[i]== s3)
+ls3++; 
+else
+lr++; 
+}
+
+
+
+
+printf("\n Analyseergebnis : ");
+if(s1 != ' ')
+printf("\n Anzahl der %c: %d",s1, ls1);
+else
+printf("\n Anzahl der Leerzeichen: %d", ls1);
+
+if(s2 != ' ')
+printf("\n Anzahl der %c: %d",s2, ls2);
+else
+printf("\n Anzahl der Leerzeichen: %d", ls2);
+
+if(s3 != ' ')
+printf("\n Anzahl der %c: %d",s3, ls3);
+else
+printf("\n Anzahl der Leerzeichen: %d", ls3);
+
+printf("\n Anzahl der rest: %d \n", lr);
+
+
+do
+	{
+		printf("\n Möchten Sie den Vorgang wiederholen?(J/N) : ");
+		option = getche();
+
+		if ((option == 'j') || (option == 'J'))
+		{
+			main();
+
+		}
+		else if ((option == 'n') || (option == 'N'))
+		{
+		printf("\n");
+			exit(0);
+
+		}
+		else
+		{
+			printf("\n Bitte geben Sie als Eingabe entweder (j/J) oder (n/N) \n");
+		}
+
+	} while (option);
+
+   
+   
+}
