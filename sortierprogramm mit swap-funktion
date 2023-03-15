@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void swap(float* a, float* b)
+{
+	float temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+
+void sortiere(float* x, float* y, float* z)
+{
+	/* realisiere: *zahl1 <= *zahl2 */
+	if (*x > *y)
+		swap(x, y);
+	/* realisiere: *zahl3 = MAX */
+	if (*y > *z)
+		swap(y, z);
+	/* gilt immer noch *zahl1 <= *zahl2 ? */
+	if (*x > *y)
+		swap(x, y);
+}
+
+int main()
+{
+	printf("\n <--------------------!!!Geben Sie werte von x,y,z ein. Dieses programm gibt formatierte Ausgabe der sortierten Werte.!!!---------------------->");
+
+	float x, y, z, checkx, checky, checkz;
+	char option;
+
+	printf("\nx :   ");
+	while (scanf_s("%f", &checkx) != 1)
+	{
+		printf("\ Üngultige eingabe! Bitte geben Sie nur Zahlenwerte ein!! \n");
+		printf("\nx :   ");
+		getchar();
+	}
+	x = checkx;
+
+	printf("\ny :   ");
+	while (scanf_s("%f", &checky) != 1)
+	{
+		printf("\ Üngultige eingabe! Bitte geben Sie nur Zahlenwerte ein!! \n");
+		printf("\ny :   ");
+		getchar();
+	}
+	y = checky;
+
+	printf("\nz :   ");
+	while (scanf_s("%f", &checkz) != 1)
+	{
+		printf("\ Üngultige eingabe! Bitte geben Sie nur Zahlenwerte ein!! \n");
+		printf("\nz :   ");
+		getchar();
+	}
+	z = checkz;
+
+	printf("\n ----------------------------------------------------------------------------------------------------------------------------\n");
+
+	printf("\n Gegebene Zahlen : %.2f,%.2f, %.2f \n", checkx, checky, checkz);
+	sortiere(&x, &y, &z);
+	printf("\n Sortierte zahlen : %.2f,%.2f,%.2f", x, y, z);
+
+
+	do
+	{
+		getchar();
+		printf("\n Möchten Sie den Vorgang wiederholen?(J/N) : ");
+		scanf_s("%c", &option);
+
+		if ((option == 'j') || (option == 'J'))
+		{
+			getchar();
+			main();
+
+		}
+		else if ((option == 'n') || (option == 'N'))
+		{
+			exit(0);
+
+		}
+		else
+		{
+			printf("\n Bitte geben Sie als Eingabe entweder (j/J) oder (n/N) \n");
+			continue;
+		}
+
+	} while (option);
+
+
+}
