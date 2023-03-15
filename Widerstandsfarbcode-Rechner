@@ -1,0 +1,204 @@
+#include "stdafx.h"
+#include <stdlib.h>
+/* Ergaenzung durch Akhil Machchhar am 03.01.2023 von hier ... */
+#include <tchar.h> 
+/* ... bis hier. neue bib */
+#include <math.h>
+#include <conio.h>
+
+/* Ergaenzung durch Akhil Machchhar am 03.01.2023 von hier ... */
+#include <stdio.h>    
+/* ... bis hier. neue bib */
+
+
+void print_codes(void);
+double decode_char(char code);
+/* Ergaenzung durch Akhil Machchhar am 03.01.2023 von hier ... */
+double decode_toleranz(char code);    
+/* ... bis hier. Toleranz dekodieren  */
+void Clear()
+{
+	system("cls");
+
+}
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	/* Ergaenzung durch Akhil Machchhar am 03.01.2023 von hier ... */
+	char code1, code2, code3, code4; /* one code per band */
+	double widerstand;
+	double widerstandsbereich_minus = -1, widerstandsbereich_plus = -1;
+	char option;
+	double color1, color2, color3, color4;
+	int flag = -1;
+	/* ... bis hier. installieren und deklarieren neuer variablen*/
+
+
+	Clear();
+	print_codes();
+	printf("\n\n\tGeben Sie die drei Farbcodes des Widerstands ein [z. B. OYG]: ");
+
+	/* Ergaenzung durch Akhil Machchhar am 03.01.2023 von hier ... */
+	printf("\n\n\tGeben Sie die 1. Farbcode des Widerstands ein : ");
+	code1 = _getche();
+	printf("\n\n\tGeben Sie die 2. Farbcode des Widerstands ein : ");
+	code2 = _getche();
+	printf("\n\n\tGeben Sie die 3. Farbcode des Widerstands ein : ");
+	code3 = _getche();
+	printf("\n\n\tGeben Sie die 4. Farbcode des Widerstands ein : ");
+	code4 = _getche();
+	/* ... bis hier. Art von der Eingabe geändert*/
+
+
+
+	color1 = decode_char(code1);
+	color2 = decode_char(code2);
+	color3 = decode_char(code3);
+	/* Ergaenzung durch Akhil Machchhar am 03.01.2023 von hier ... */
+	color4 = decode_toleranz(code4);
+	/* ... bis hier. Toleranz dekodieren */
+
+	if (color1 == -999.0 || color2 == -999.0 || color3 == -999.0 || color4 == -999.0)
+		printf("\n\n\tBad code -- cannot compute resistance\n\n\n");
+
+	/* Ergaenzung durch Akhil Machchhar am 03.01.2023 von hier ... */
+	else {
+		widerstand = (10.0 * color1 + color2) * pow(10.0, color3);
+
+		if (color4 == 10) {
+			widerstandsbereich_minus = widerstand - 0.1 * widerstand;
+			widerstandsbereich_plus = widerstand + 0.1 * widerstand;
+		}
+		else if (color4 == 20) {
+			widerstandsbereich_minus = widerstand - 0.2 * widerstand;
+			widerstandsbereich_plus = widerstand + 0.2 * widerstand;
+		}
+		else if (color4 == 5) {
+			widerstandsbereich_minus = widerstand - 0.05 * widerstand;
+			widerstandsbereich_plus = widerstand + 0.05 * widerstand;
+		}
+
+		/* ... bis hier.  compute and print resistance in ohms. */
+		printf("\n\n\twiderstand in Ohm:\t%.0f\n\n\n", widerstand);
+
+		/* Ergaenzung durch Akhil Machchhar am 03.01.2023 von hier ... */
+
+		printf("\n\n widerstansbereich: [  %f   :   %f  ] in Ohm\n\n\n", widerstandsbereich_minus, widerstandsbereich_plus);
+		/* ... bis hier. This line of code prints the range */
+
+
+
+		/* Ergaenzung durch Akhil Machchhar am 03.01.2023 von hier ... */
+		do
+		{
+			printf("\n Moechten Sie den Vorgang wiederholen?(J/N) : ");
+			option = _getche();
+
+			if ((option == 'j') || (option == 'J'))
+			{
+				_tmain(argc, argv);
+
+			}
+			else if ((option == 'n') || (option == 'N'))
+			{
+				printf("\n");
+				exit(0);
+
+			}
+			else
+			{
+				printf("\n Bitte geben Sie als Eingabe entweder (j/J) oder (n/N) \n");
+			}
+
+		} while (option);
+		/* ... bis hier.  wiederholungsmöglichkeit */
+
+	}
+	return 0;
+
+
+}
+
+
+
+
+
+
+void print_codes(void)
+{
+	printf("\n\n\tDekodierung der Farbkennzeichnungen von Widerstaenden\n");
+	printf("\n\n\tEs werden folgende Farbkodierungen verwendet:\n\n\n\t");
+	printf("FARBE\t\t\t KODIERUNG\n\t");
+	printf("-----\t\t\t ----\n\n");
+	printf("\tBlack-------------------> B\n");
+	printf("\tBrown-------------------> N\n");
+	printf("\tRed---------------------> R\n");
+	printf("\tOrange------------------> O\n");
+	printf("\tYellow------------------> Y\n");
+	printf("\tGreen-------------------> G\n");
+	printf("\tBlue--------------------> E\n");
+	printf("\tViolet------------------> V\n");
+	printf("\tGray--------------------> A\n");
+	printf("\tWhite-------------------> W\n");
+
+	printf("\t--moegliche Toleranzen--\n");
+	printf("\tSilver (10%%) -----------> S\n");
+	printf("\tGold  (5%%) -------------> L\n");
+	printf("\tnone (20%%) -------------> -\n");
+
+}
+
+
+double decode_char(char code)
+{
+	switch (code)
+	{
+	case 'B':
+		return 0.0;
+	case 'N':
+		return 1.0;
+	case 'R':
+		return 2.0;
+	case 'O':
+		return 3.0;
+	case 'Y':
+		return 4.0;
+	case 'G':
+		return 5.0;
+	case 'E':
+		return 6.0;
+	case 'V':
+		return 7.0;
+	case 'A':
+		return 8.0;
+	case 'W':
+		return 9.0;
+	default:
+		return -999.0;
+
+	}
+}
+
+
+/* Ergaenzung durch Akhil Machchhar am 03.01.2023 von hier ... */
+double decode_toleranz(char code)
+{
+	switch (code)
+	{
+	case 'S':
+		return 10.0;
+	case 'L':
+		return 5.0;
+	case '-':
+		return 20.0;
+	default:
+		return -999.0;
+	}
+}
+/* ... bis hier.  Toleranz dekodieren */
+
+
+
+
+
